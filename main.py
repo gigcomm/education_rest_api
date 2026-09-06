@@ -1,15 +1,18 @@
 import uuid
+from http import HTTPStatus
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from starlette import status
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
-    allow_methods=['*']
+    allow_methods=['*'],
+    allow_credentials=True,
 )
 
 class Task(BaseModel):
@@ -17,8 +20,12 @@ class Task(BaseModel):
     title: str
     completed: bool
 
-class TaskResponse(BaseModel):
+class TaskCreate(BaseModel):
     title: str
+
+class TaskUpdateResponse(BaseModel):
+    title: str | None = None
+    completed: bool | None = None
 
 
 tasks: list[Task] = []
@@ -28,23 +35,24 @@ def read_tasks() -> list[Task]:
     return tasks
 
 
-@app.post('/tasks')
-def create_task(task: TaskResponse) -> Task:
+@app.post('/tasks', status_code=status.HTTP_201_CREATED)
+def create_task(task: TaskCreate) -> Task:
     new_task = Task(id=str(uuid.uuid4()), title=task.title, completed=False)
     tasks.append(new_task)
     return new_task
 
-book: str = ''
+@app.patch('/tasks/{task_id}')
+def update_task(task_id: str, data: TaskUpdateResponse) -> Task | None:
+    for task in tasks:
+        if task.id == task_id:
+            if data.title:
+                task.title = data.title
+            if data.completed is not None:
+                task.completed = data.completed
+            return task
 
-@app.get('/book')
-def read_book() -> str:
-    return f"Любимая книга: {book}"
-
-class RequestBook(BaseModel):
-    book: str
-
-@app.post('/book')
-def create_book(data: RequestBook) -> dict:
-    global book
-    book = data.book
-    return {"message": "Добавлена любимая книга"}
+@app.delete('/tasks/{task_id}', status_code=status.HTTP_204_NO_CONTENT)
+def delete_task(task_id: str):
+    for task in tasks:
+        if task.id == task_id:
+            tasks.remove(task)
