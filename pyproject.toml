@@ -1,9 +1,10 @@
 [project]
 name = "education-rest-api"
 version = "0.1.0"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.141.1",
+    "load-config>=0.2.0b6",
     "psycopg[binary]>=3.3.5",
     "pydantic>=2.13.5",
     "sqlalchemy>=2.0.52",
