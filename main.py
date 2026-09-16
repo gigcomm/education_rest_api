@@ -11,14 +11,14 @@ from routers.category import category_router
 from routers.tasks import task_router
 
 
-@asynccontextmanager
-async def lifespan(_: FastAPI):
-    Base.metadata.create_all(bind=engine)
-    yield
+# @asynccontextmanager
+# async def lifespan(_: FastAPI):
+#     Base.metadata.create_all(bind=engine)
+#     yield
 
 
 config = load_settings()
-app = FastAPI(lifespan=lifespan)
+app = FastAPI()
 app.include_router(router=task_router)
 app.include_router(router=category_router)
 
