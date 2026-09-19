@@ -1,7 +1,7 @@
 from collections.abc import Generator
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import Session, sessionmaker
 
 DATABASE_URL = "postgresql+psycopg://postgres:admin@127.0.0.1:5434/postgres"
 engine = create_engine(DATABASE_URL)

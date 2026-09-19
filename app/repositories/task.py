@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from models.task import TaskORM
+from app.models.task import TaskORM
 
 
 class TaskRepository:
@@ -9,9 +9,9 @@ class TaskRepository:
         self.db = db
 
     def get_all(self) -> list[TaskORM]:
-        return self.db.scalars(select(TaskORM)).all()
+        return list(self.db.scalars(select(TaskORM)).all())
 
-    def create(self, title: str):
+    def create(self, title: str) -> TaskORM:
         new_task = TaskORM(title=title, completed=False)
         self.db.add(new_task)
         return new_task
@@ -19,5 +19,5 @@ class TaskRepository:
     def get_by_id(self, task_id: str) -> TaskORM | None:
         return self.db.get(TaskORM, task_id)
 
-    def delete(self, task: TaskORM):
+    def delete(self, task: TaskORM) -> None:
         self.db.delete(task)
