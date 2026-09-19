@@ -1,14 +1,54 @@
 [project]
 name = "education-rest-api"
 version = "0.1.0"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 dependencies = [
+    "alembic>=1.20.0",
     "fastapi>=0.141.1",
+    "load-config>=0.2.0b6",
+    "load-dotenv>=0.1.0",
+    "mypy>=2.3.1",
+    "pre-commit>=4.6.2",
     "psycopg[binary]>=3.3.5",
     "pydantic>=2.13.5",
     "sqlalchemy>=2.0.52",
     "uvicorn>=0.52.4",
 ]
+
+[tool.ruff]
+# Под какую версию Python проверять синтаксис и правила
+target-version = "py314"
+# Максимальная длина строки
+line-length = 88
+exclude = ["alembic"]
+
+[tool.ruff.lint]
+# Какие группы правил включены: E - pycodestyle, F - pyflakes, I - сортировка импортов
+select = ["E", "F", "I"]
+
+[tool.ruff.format]
+# Использовать двойные кавычки
+quote-style = "double"
+# Использовать пробелы вместо табов
+indent-style = "space"
+# Оставлять "магические" висячие запятые для удобного переноса строк
+skip-magic-trailing-comma = false
+# Автоматически выбрать стиль перевода строк под среду/файл
+line-ending = "auto"
+
+[tool.mypy]
+# Какие каталоги проверять по умолчанию
+files = ["app"]
+# Под какую версию Python проверять типы
+python_version = "3.12"
+# Проверять даже тела функций без полной типизации
+check_untyped_defs = true
+# Показывать коды ошибок рядом с сообщениями
+show_error_codes = true
+# Предупреждать о лишних type: ignore
+warn_unused_ignores = true
+# Не падать на внешних библиотеках без type stubs
+ignore_missing_imports = true
 
 [dependency-groups]
 dev = [

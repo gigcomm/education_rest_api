@@ -1,0 +1,53 @@
+# Environment variables and local secrets
+.env
+.env.*
+!.env.example
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.pytype/
+
+# Test coverage
+.coverage
+.coverage.*
+htmlcov/
+
+# Packaging and build output
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Development tools
+.tox/
+.nox/
+.cache/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# Local runtime data
+*.log
+*.sqlite
+*.sqlite3
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini

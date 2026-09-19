@@ -1,0 +1,15 @@
+# Keep repository text files consistent on every operating system.
+* text=auto eol=lf
+
+# Windows command scripts require CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Common binary files must not be line-ending normalized.
+*.ico binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.pdf binary
+*.zip binary
