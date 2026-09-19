@@ -1,11 +1,7 @@
 from sqlalchemy.orm import Session
 
 from app.repositories.task import TaskRepository
-from app.schemas.task import TaskCreate, TaskReadShema, TaskUpdateResponse
-
-
-class TaskNotFound(Exception):
-    pass
+from app.schemas.task import TaskCreate, TaskNotFound, TaskReadShema, TaskUpdateResponse
 
 
 class TaskService:
@@ -23,7 +19,7 @@ class TaskService:
         return TaskReadShema.model_validate(task)
 
     def update_task(self, task_id: str, payload: TaskUpdateResponse) -> TaskReadShema:
-        task = self.repository.get_by_id(task_id)
+        task = self.repository.get_by_id(task_id=task_id)
         if task is None:
             raise TaskNotFound("Задача не найдена")
         if payload.title is not None:
